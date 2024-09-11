@@ -1,0 +1,98 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:consolas;
+}
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    background:white;
+}
+.calculator{
+    position:relative;
+    width: 340px;
+    padding:20px;
+    border-radius:28px;
+
+    box-shadow:20px 20px 20px rgba(0,0,0,0.1),-15px -15px 20px  white;
+}
+.calculator .btn{
+   position :relative;
+   display:grid;
+
+}
+.calculator .btn #value{
+    position :relative;
+    grid-column: span 4;
+    use-select:none;
+    overflow:none;
+    width:100%;
+    text-align:end;
+    color:#5166d6;
+    height:100px;
+    line-height:100px;
+    box-shadow:inset 5px 5px 10px rgba(0,0,0,0.1),inset -5px -5px 20px #fff;
+    border-radius: 10px;
+    margin-bottom:12px;
+    padding:0 20px;
+    font-size:2em;
+    font-weight:500px;
+
+    
+ }
+ .calculator .btn span{
+    position: relative;
+    padding:10px;
+    box-shadow:inset 5px 5px 10px rgba(0,0,0,0.1),inset -5px -5px 20px #fff;
+   margin:10px;
+   cursor:pointer;
+   use-select:none;
+   display:flex;
+   justify-content: center;
+   align-items:center;
+   font-size: 1.2rem;
+   color:#666;
+   border:2px solid #edf1f4;
+   box-shadow:5px 5px 10px rgba(0,0,0,0.1), -5px -5px 10px #fff;
+   border-radius:10px;
+
+ }
+ .calculator .btn span :active{
+    box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1),  inset -5px -5px 10px #fff;
+    color:#f44336;
+
+ }
+ .calculator .btn span#clear{
+    grid-column: span 2;
+    background:red;
+    color:white;
+
+ }
+ .calculator .btn span#plus{
+    grid-row: span 2;
+    background:green;
+    color:white;
+    border:2px solid #edf1f4;
+
+ }
+ 
+ .calculator .btn span#equal{
+    grid-row: span 2;
+    background:#2196f3;
+    color:white;
+    border:2px solid #edf1f4;
+
+ }
+
+
+ .calculator .btn span#clear:active,
+ .calculator .btn span#equal:active,
+ .calculator .btn span#plus:active
+ {
+   box-shadow: 5px 5px 10px rgba(0,0,0,0.1),-5px -5px 10px #fff, inset 5px 5px rgba(0,0,0.1);
+   
+
+ }

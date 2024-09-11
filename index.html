@@ -1,0 +1,200 @@
+
+
+
+
+ <!DOCTYPE html>
+ <html lang="fr">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Calculatrice avec Fond Mathématique Animé</title>
+     
+     <style>
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+             font-family: Consolas;
+         }
+         body {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             min-height: 100vh;
+             overflow: hidden;
+             background: #282c34;
+             color: white;
+             position: relative;
+             transition: background 0.3s, color 0.3s;
+         }
+         body.dark {
+             background: #ffffff;
+             color: #000000;
+         }
+         .background {
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             overflow: hidden;
+             z-index: -1;
+             pointer-events: none;
+         }
+         .symbol {
+             position: absolute;
+             font-size: 80px;
+             opacity: 0.8;
+             animation: float 6s infinite;
+             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+         }
+         @keyframes float {
+             0% { transform: translateY(0); }
+             50% { transform: translateY(-30px); }
+             100% { transform: translateY(0); }
+         }
+ 
+         .symbol:nth-child(1) { color: #ff6347; top: 5%; left: 5%; }
+         .symbol:nth-child(2) { color: #4682b4; top: 10%; left: 25%; }
+         .symbol:nth-child(3) { color: #3cb371; top: 15%; left: 50%; }
+         .symbol:nth-child(4) { color: #ffd700; top: 20%; left: 70%; }
+         .symbol:nth-child(5) { color: #9370db; top: 30%; left: 15%; }
+         .symbol:nth-child(6) { color: #ff69b4; top: 35%; left: 35%; }
+         .symbol:nth-child(7) { color: #ff4500; top: 40%; left: 55%; }
+         .symbol:nth-child(8) { color: #00ced1; top: 50%; left: 80%; }
+ 
+         .calculator {
+             position: relative;
+             width: 340px;
+             padding: 20px;
+             border-radius: 28px;
+             box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1), 
+                         -15px -15px 20px white;
+             background: rgba(255, 255, 255, 0.8);
+             transition: background 0.3s;
+         }
+         body.dark .calculator {
+             background: rgba(17, 0, 11, 0.8);
+             color: white;
+         }
+         body.dark .calculator .btn span{
+             background: rgba(255, 247, 252, 0.8);
+             color: rgb(30, 28, 28);
+         }
+         .calculator .btn {
+             display: grid;
+             grid-template-columns: repeat(4, 1fr);
+             gap: 10px;
+         }
+         .calculator #value {
+             grid-column: span 4;
+             user-select: none;
+             overflow: hidden;
+             width: 100%;
+             text-align: end;
+             color: #5166d6;
+             height: 100px;
+             line-height: 100px;
+             box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), 
+                         inset -5px -5px 20px #fff;
+             border-radius: 10px;
+             margin-bottom: 12px;
+             padding: 0 20px;
+             font-size: 2em;
+             font-weight: 500;
+         }
+         .calculator .btn span {
+             position: relative;
+             padding: 10px;
+             box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), 
+                         inset -5px -5px 20px #fff;
+             margin: 10px;
+             cursor: pointer;
+             user-select: none;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             font-size: 1.2rem;
+             color: #666;
+             border: 2px solid #edf1f4;
+             border-radius: 10px;
+             transition: background 0.3s;
+         }
+         .toggleBtn {
+             position: absolute;
+             width: 40px;
+             height: 40px;
+             background: rgb(250, 246, 246);
+             top: 20px;
+             right: 20px;
+             border-radius: 50%;
+             border: 2px solid #edf1f4;
+             cursor: pointer;
+             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px #fff;
+         }
+     </style> 
+ </head>
+ <body>
+     <div class="background">
+         <div class="symbol">+</div>
+         <div class="symbol">-</div>
+         <div class="symbol">×</div>
+         <div class="symbol">÷</div>
+         <div class="symbol">=</div>
+         <div class="symbol">√</div>
+         <div class="symbol">π</div>
+         <div class="symbol">∞</div>
+     </div>
+     <div class="toggleBtn"></div>
+     <div class="calculator">
+         <h2 id="value">0</h2>
+         <div class="btn">
+             <span id="clear">clear</span>
+             <span>/</span>
+             <span>*</span>
+             <span>7</span>
+             <span>8</span>
+             <span>9</span>
+             <span id="moins">-</span>
+             <span>4</span>
+             <span>5</span>
+             <span>6</span>
+             <span id="plus">+</span>
+             <span>1</span>
+             <span>2</span>
+             <span>3</span>
+             <span>00</span>
+             <span>0</span>
+             <span>.</span>
+             <span id="equal">=</span>
+         </div>
+     </div>
+     
+     <script>
+         const buttons = document.querySelectorAll('.btn span');
+         const value = document.getElementById('value');
+         const toggleBtn = document.querySelector('.toggleBtn');
+         let body = document.querySelector('body');
+         
+         buttons.forEach(button => {
+             button.addEventListener("click", function() {
+                 if (this.innerHTML === "=") {
+                     try {
+                         value.innerHTML = eval(value.innerHTML) || 0;
+                     } catch (e) {
+                         value.innerHTML = "Error";
+                     }
+                 } else if (this.innerHTML === "clear") {
+                     value.innerHTML = "0";
+                 } else {
+                     value.innerHTML = value.innerHTML === "0" ? this.innerHTML : value.innerHTML + this.innerHTML;
+                 }
+             });
+         });
+ 
+         toggleBtn.onclick = function() {
+             body.classList.toggle('dark');
+         }
+     </script>
+ </body>
+ </html>
